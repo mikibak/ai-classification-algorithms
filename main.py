@@ -2,12 +2,13 @@ import numpy as np
 
 from decision_tree import DecisionTree
 from random_forest import RandomForest
-from load_data import generate_data, load_titanic
+from load_data import generate_data, load_titanic, load_reviews
 
 def main():
     np.random.seed(123)
 
-    train_data, test_data = load_titanic()
+    # train_data, test_data = load_titanic()
+    train_data, test_data = load_reviews()
 
     dt = DecisionTree({"depth": 14})
     dt.train(*train_data)
@@ -18,10 +19,10 @@ def main():
     # My mamy Gini gain - chcemy to maksymalizować
     # w korzeniu największy Gini gain
 
-    rf = RandomForest({"ntrees": 10, "feature_subset": 2, "depth": 100})
-    rf.train(*train_data)
-    rf.evaluate(*train_data)
-    rf.evaluate(*test_data)
+    # rf = RandomForest({"ntrees": 10, "feature_subset": 2, "depth": 100})
+    # rf.train(*train_data)
+    # rf.evaluate(*train_data)
+    # rf.evaluate(*test_data)
 
 if __name__=="__main__":
     main()

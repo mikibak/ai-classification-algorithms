@@ -68,46 +68,14 @@ class Node:
         best_gain = -np.inf
         best_split = None
 
-        if 0:
-
-            new_X = copy.deepcopy(X)
-            new_y = copy.deepcopy(y)
-
-            # subset of X
-            for i in range(len(X[0]) - feature_subset):
-                # wybieram te co usuwam
-                index = random.randint(0, (len(X[0]) - 1))
-
-                for i in range(len(X)):
-                    np.append(new_X, X[index])
-
-                new_X = np.append(new_X, X[index])
-                new_y = np.append(new_y, y[index])
-
-            for d in range(new_X.shape[1]):
-                order = np.argsort(new_X[:, d])
-                y_sorted = new_y[order]
-                possible_splits = self.find_possible_splits(new_X[order, d])
-                idx, value = self.gini_best_score(y_sorted, possible_splits)
-                if value > best_gain:
-                    best_gain = value
-                    best_split = (d, [idx, idx + 1])
-
-            if best_split is None:
-                return None, None
-
-            best_value = np.mean(new_X[best_split[1], best_split[0]])
-
-            return best_split[0], best_value
-        else:
-            for d in range(X.shape[1]):
-                order = np.argsort(X[:, d])
-                y_sorted = y[order]
-                possible_splits = self.find_possible_splits(X[order, d])
-                idx, value = self.gini_best_score(y_sorted, possible_splits)
-                if value > best_gain:
-                    best_gain = value
-                    best_split = (d, [idx, idx + 1])
+        for d in range(X.shape[1]):
+            order = np.argsort(X[:, d])
+            y_sorted = y[order]
+            possible_splits = self.find_possible_splits(X[order, d])
+            idx, value = self.gini_best_score(y_sorted, possible_splits)
+            if value > best_gain:
+                best_gain = value
+                best_split = (d, [idx, idx + 1])
 
             if best_split is None:
                 return None, None
