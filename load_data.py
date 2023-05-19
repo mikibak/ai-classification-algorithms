@@ -30,12 +30,13 @@ def load_titanic():
 
 
 def load_reviews():
-    load_titanic()
-    # data = pd.read_json("Magazine_Subscriptions.json")
-    data = pd.read_json("reviews_reduced.json", lines=True)
-    data = data[["overall", "verified", "reviewerName", "reviewText", "summary"]]
+    #load_titanic()
+    data = pd.read_json("Magazine_Subscriptions.json",lines=True,nrows=10000)
+    #data = pd.read_json("reviews_reduced.json", lines=True)
+    data = data[["overall", "vote", "verified", "unixReviewTime"]]
 
     data = data.dropna().reset_index(drop=True) # very important, drops rows containing NULL
+    data["verified"] = [1 if verified else 0 for verified in data["verified"]]
     test_idx = np.random.choice(range(data.shape[0]), round(0.2*data.shape[0]), replace=False)
     data_test = data.iloc[test_idx, :]
     data_train = data.drop(test_idx, axis=0)

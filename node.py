@@ -77,12 +77,12 @@ class Node:
                 best_gain = value
                 best_split = (d, [idx, idx + 1])
 
-            if best_split is None:
-                return None, None
+        if best_split is None:
+            return None, None
 
-            best_value = np.mean(X[best_split[1], best_split[0]])
+        best_value = np.mean(X[best_split[1], best_split[0]])
 
-            return best_split[0], best_value
+        return best_split[0], best_value
 
     def predict(self, x):
         if self.feature_idx is None:
