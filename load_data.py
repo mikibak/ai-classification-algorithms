@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 
+from bag_of_words import bag_of_words
+
 
 def generate_data():
     TRAIN_SAMPLES = 100
@@ -30,10 +32,11 @@ def load_titanic():
 
 
 def load_reviews():
-    #load_titanic()
     data = pd.read_json("Magazine_Subscriptions.json",lines=True,nrows=10000)
     #data = pd.read_json("reviews_reduced.json", lines=True)
-    data = data[["overall", "vote", "verified", "unixReviewTime"]]
+    data = data[["overall", "verified", "reviewText"]]
+
+    data = bag_of_words(data)
 
     data = data.dropna().reset_index(drop=True) # very important, drops rows containing NULL
     data["verified"] = [1 if verified else 0 for verified in data["verified"]]
