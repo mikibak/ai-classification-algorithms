@@ -5,23 +5,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 import re
 
 
-def bag_of_words(data):
-    with open('subjclueslen1-HLTEMNLP05.tff', 'r') as file:
-        lines = file.readlines()
-
-    # Extract the relevant information
-    data = []
-    for line in lines:
-        line = line.strip()
-        entry = {}
-        for item in line.split()[1:]:
-            key, value = item.split("=")
-            entry[key] = value
-        data.append(entry)
-
-    # Create a pandas DataFrame
-    positive_and_negative = pd.DataFrame(data)
-
+def bag_of_words(data, positive_and_negative):
     # nltk.download('stopwords')
     documents = data["reviewText"]
     data = data.drop("reviewText", axis=1)
@@ -34,10 +18,8 @@ def bag_of_words(data):
 
     return data
 
-def preprocess(review_text, positive_and_negative):
-    # positive_and_negative = pd.read_csv("subjclueslen1-HLTEMNLP05.tff", delim_whitespace=True)
 
-    # changes document to lower case and removes stopwords'
+def preprocess(review_text, positive_and_negative):
     # change sentence to lower case
     review_text = str(review_text).lower()
     # tokenize into words
@@ -45,9 +27,9 @@ def preprocess(review_text, positive_and_negative):
     string_no_punctuation = re.sub("[^\w\s]", "", review_text)
     words = string_no_punctuation.split()
     # remove stop words
-    words = [word for word in words if word not in stopwords.words("english")]
+    # words = [word for word in words if word not in stopwords.words("english")]
     # keep only positive or words
-    words = [word for word in words if word in positive_and_negative]
+    words = [word for word in words if word in positive_and_negative["word1"].values]
     # join back words to make sentence
     document = " ".join(words)
 
