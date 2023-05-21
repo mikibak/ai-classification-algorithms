@@ -54,20 +54,19 @@ def preprocess_without_joining_words(review_text, positive_and_negative):
 
 
 def count_pos_and_neg(review_text, positive_and_negative):
-    # df = pd.DataFrame("n_of_pos", "n_of_neg", "n_of_both", "n_of_neutral")
-    # df["n_of_pos"] = []
-    # df["n_of_neg"] = []
-    # df["n_of_both"] = []
-    # df["n_of_neutral"] = []
-
     numbers = [0, 0, 0, 0]
 
     for word in review_text:
         row = positive_and_negative.loc[positive_and_negative['word1'] == word]
-        print(row.columns)
-        positivity = row.at[0, 'priorpolarity']
+        positivity = row.iat[0, row.columns.get_loc('priorpolarity')]
         if positivity == "positive":
             numbers[0] += 1
+        elif positivity == "negative":
+            numbers[1] += 1
+        elif positivity == "both":
+            numbers[2] += 1
+        elif positivity == "neutral":
+            numbers[3] += 1
 
     return numbers
 
@@ -77,6 +76,5 @@ def vectorize_with_lexicon(data, positive_and_negative):
     data = data.drop("reviewText", axis=1)
     documents = [preprocess_without_joining_words(document, positive_and_negative) for document in documents]
     reviews_vector = [count_pos_and_neg(document, positive_and_negative) for document in documents]
-    data = data.join(reviews_vector)
-
+    data = data.join(pd.DataFrame(reviews_vector, columns=["n_of_pos", "n_of_neg", "n_of_both", "n_of_neutral"]))
     return data
