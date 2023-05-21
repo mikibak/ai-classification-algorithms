@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 
-from bag_of_words import bag_of_words
+from vectorize import bag_of_words
+from vectorize import vectorize_with_lexicon
 
 
 def generate_data():
@@ -31,11 +32,15 @@ def load_titanic():
     return (X_train, y_train), (X_test, y_test)
 
 
+
+
+
 def load_reviews():
     data = pd.read_json("Magazine_Subscriptions.json",lines=True,nrows=1000)
 
     data = data[["overall", "verified", "reviewText"]]
-    data = bag_of_words(data, load_lexicon())
+    # data = bag_of_words(data, load_lexicon())
+    data = vectorize_with_lexicon(data, load_lexicon())
 
     data = data.dropna().reset_index(drop=True) # very important, drops rows containing NULL
     data["verified"] = [1 if verified else 0 for verified in data["verified"]]
