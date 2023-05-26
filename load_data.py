@@ -44,6 +44,10 @@ def load_reviews():
 
     data = data.dropna().reset_index(drop=True) # very important, drops rows containing NULL
     data["verified"] = [1 if verified else 0 for verified in data["verified"]]
+    data.loc[data['overall'] <= 3.0, 'overall'] = 0
+    data.loc[data['overall'] > 3.0, 'overall'] = 1
+    # data = data.drop(data[data.overall == 3.0].index)
+    # data = data.reset_index() this removed neutral opinions
     test_idx = np.random.choice(range(data.shape[0]), round(0.2*data.shape[0]), replace=False)
     data_test = data.iloc[test_idx, :]
     data_train = data.drop(test_idx, axis=0)
