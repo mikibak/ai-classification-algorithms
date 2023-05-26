@@ -5,11 +5,11 @@ from sklearn.feature_extraction.text import CountVectorizer
 import re
 
 
-def bag_of_words(data, positive_and_negative):
+def bag_of_words(data):
     # nltk.download('stopwords')
     documents = data["reviewText"]
     data = data.drop("reviewText", axis=1)
-    documents = [preprocess(document, positive_and_negative) for document in documents]
+    documents = [preprocess(document) for document in documents]
 
     vectorizer = CountVectorizer()
     bow_model = vectorizer.fit_transform(documents)
@@ -19,7 +19,7 @@ def bag_of_words(data, positive_and_negative):
     return data
 
 
-def preprocess(review_text, positive_and_negative):
+def preprocess(review_text):
     # change sentence to lower case
     review_text = str(review_text).lower()
     # tokenize into words
@@ -27,9 +27,7 @@ def preprocess(review_text, positive_and_negative):
     string_no_punctuation = re.sub("[^\w\s]", "", review_text)
     words = string_no_punctuation.split()
     # remove stop words
-    # words = [word for word in words if word not in stopwords.words("english")]
-    # keep only positive or words
-    words = [word for word in words if word in positive_and_negative["word1"].values]
+    words = [word for word in words if word not in stopwords.words("english")]
     # join back words to make sentence
     document = " ".join(words)
 
@@ -37,16 +35,14 @@ def preprocess(review_text, positive_and_negative):
 
 
 # TODO clean this up
-def preprocess_without_joining_words(review_text, positive_and_negative):
+def preprocess_with_lexicon(review_text, positive_and_negative):
     # change sentence to lower case
     review_text = str(review_text).lower()
     # tokenize into words
     # nltk.tokenize.sent_tokenize(review_text, language='english')
     string_no_punctuation = re.sub("[^\w\s]", "", review_text)
     words = string_no_punctuation.split()
-    # remove stop words
-    # words = [word for word in words if word not in stopwords.words("english")]
-    # keep only positive or words
+    # keep only positive or negative words
     words = [word for word in words if word in positive_and_negative["word1"].values]
 
     return words
@@ -74,7 +70,7 @@ def count_pos_and_neg(review_text, positive_and_negative):
 def vectorize_with_lexicon(data, positive_and_negative):
     documents = data["reviewText"]
     data = data.drop("reviewText", axis=1)
-    documents = [preprocess_without_joining_words(document, positive_and_negative) for document in documents]
+    documents = [preprocess_with_lexicon(document, positive_and_negative) for document in documents]
     reviews_vector = [count_pos_and_neg(document, positive_and_negative) for document in documents]
     data = data.join(pd.DataFrame(reviews_vector, columns=["n_of_pos", "n_of_neg", "n_of_both", "n_of_neutral"]))
     return data

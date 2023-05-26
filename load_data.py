@@ -37,17 +37,19 @@ def load_titanic():
 
 def load_reviews():
     data = pd.read_json("Magazine_Subscriptions.json",lines=True,nrows=1000)
-
     data = data[["overall", "verified", "reviewText"]]
-    # data = bag_of_words(data, load_lexicon())
-    data = vectorize_with_lexicon(data, load_lexicon())
+
+    data = bag_of_words(data)
+    # data = vectorize_with_lexicon(data, load_lexicon())
 
     data = data.dropna().reset_index(drop=True) # very important, drops rows containing NULL
     data["verified"] = [1 if verified else 0 for verified in data["verified"]]
+    data = data.drop("verified", axis=1)
     data.loc[data['overall'] <= 3.0, 'overall'] = 0
     data.loc[data['overall'] > 3.0, 'overall'] = 1
-    # data = data.drop(data[data.overall == 3.0].index)
-    # data = data.reset_index() this removed neutral opinions
+    data = data.sample(frac=1)
+    # data = data.drop(data[data.overall == 3.0].index) this removed neutral opinions
+    data = data.reset_index()
     test_idx = np.random.choice(range(data.shape[0]), round(0.2*data.shape[0]), replace=False)
     data_test = data.iloc[test_idx, :]
     data_train = data.drop(test_idx, axis=0)
