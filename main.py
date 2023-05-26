@@ -1,5 +1,6 @@
 import numpy as np
 
+import svm
 from decision_tree import DecisionTree
 from random_forest import RandomForest
 from load_data import generate_data, load_titanic, load_reviews
@@ -10,10 +11,15 @@ def main():
     # train_data, test_data = load_titanic()
     train_data, test_data = load_reviews()
 
-    dt = DecisionTree({"depth": 14})
-    dt.train(*train_data)
-    dt.evaluate(*train_data)
-    dt.evaluate(*test_data)
+    # dt = DecisionTree({"depth": 14})
+    # dt.train(*train_data)
+    # dt.evaluate(*train_data)
+    # dt.evaluate(*test_data)
+
+    SVM = svm.Svm()
+    SVM.train(*train_data)
+    SVM.evaluate(*train_data)
+    SVM.evaluate(*test_data)
 
     # Gini index - miara nieczystości, chcemy to minimalizować
     # My mamy Gini gain - chcemy to maksymalizować
