@@ -2,11 +2,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import svm
+import NeuralNetwork
 from decision_tree import DecisionTree
 from random_forest import RandomForest
 from load_data import generate_data, load_titanic, load_reviews
 
+def normalize_2d(matrix):
+    norm = np.linalg.norm(matrix)
+    matrix = matrix/norm  # normalized matrix
+    return matrix
 def main():
+
+    train_data, test_data = load_reviews(2000)
+    train_data=(train_data[0],train_data[1]-1)
+    test_data=(test_data[0],test_data[1]-1)
+    NeuralNetwork.NeuralNetwork(train_data,test_data)
+    train_data, test_data = load_titanic()
+    NeuralNetwork.NeuralNetwork(train_data,test_data)
+
     np.random.seed(123)
     # data_sizes = [50, 100, 200, 500, 1000, 2000, 5000]
     data_sizes = [2000]

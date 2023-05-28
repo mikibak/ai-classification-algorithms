@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-
+import nltk
 from vectorize import bag_of_words
 from vectorize import vectorize_with_lexicon
 
@@ -35,8 +35,9 @@ def load_titanic():
 
 
 
-def load_reviews(data_size):
-    data = pd.read_json("Magazine_Subscriptions.json",lines=True,nrows=data_size)
+def load_reviews(ammount):
+    #nltk.download('stopwords')
+    data = pd.read_json("Magazine_Subscriptions.json",lines=True,nrows=ammount)
     data = data[["overall", "verified", "reviewText"]]
 
     data = bag_of_words(data)
