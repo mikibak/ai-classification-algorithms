@@ -3,10 +3,11 @@ import pandas as pd
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
 import re
+from nltk.stem import PorterStemmer
+from nltk.tokenize import sent_tokenize, word_tokenize
 
 
 def bag_of_words(data):
-    # nltk.download('stopwords')
     documents = data["reviewText"]
     data = data.drop("reviewText", axis=1)
     documents = [preprocess(document) for document in documents]
@@ -26,8 +27,10 @@ def preprocess(review_text):
     # nltk.tokenize.sent_tokenize(review_text, language='english')
     string_no_punctuation = re.sub("[^\w\s]", "", review_text)
     words = string_no_punctuation.split()
-    # remove stop words
-    words = [word for word in words if word not in stopwords.words("english")]
+    # remove stop words and stemming
+    ps = PorterStemmer()
+    words = [ps.stem(word) for word in words if word not in stopwords.words("english")]
+
     # join back words to make sentence
     document = " ".join(words)
 

@@ -9,7 +9,7 @@ def main():
     np.random.seed(123)
 
     # train_data, test_data = load_titanic()
-    train_data, test_data = load_reviews()
+    train_data, test_data = load_reviews(1000)
 
     # dt = DecisionTree({"depth": 14})
     # dt.train(*train_data)

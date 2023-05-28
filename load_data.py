@@ -35,8 +35,8 @@ def load_titanic():
 
 
 
-def load_reviews():
-    data = pd.read_json("Magazine_Subscriptions.json",lines=True,nrows=5000)
+def load_reviews(data_size):
+    data = pd.read_json("Magazine_Subscriptions.json",lines=True,nrows=data_size)
     data = data[["overall", "verified", "reviewText"]]
 
     data = bag_of_words(data)
