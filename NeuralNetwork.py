@@ -29,12 +29,12 @@ class NeuraltNetwork:
                 X_test[:, i] = X_test[:, i] / max(X_test[:, i])
         self.model = tf.keras.models.Sequential([
                 tf.keras.layers.Flatten(),
-                tf.keras.layers.Dense(45, activation='relu'),
+                tf.keras.layers.Dense(40, activation='relu'),
                 tf.keras.layers.Dropout(0.2),
                 tf.keras.layers.Dense(max(test_data[1])+1)
         ])
         self.model.compile(optimizer='adam',
                           loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                           metrics=['accuracy'])
-        self.model.fit(X_train, y_train, epochs=10)
+        self.model.fit(X_train, y_train, epochs=6)
 
