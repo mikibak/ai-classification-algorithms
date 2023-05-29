@@ -18,7 +18,7 @@ class ConfusionMatrix:
         iter=0
         mode = ["NN","SVM"]
         plt.figure(figsize=(10, 10))
-        plt.title("confusion matrixes for NN and SVM")
+        plt.suptitle("confusion matrixes for NN and SVM")
         for algorythm in [self.NNConfusionMatrix,self.svmConfucionMatrix]:
             for i in range(len(algorythm)):
                 plt.subplot(2, len(self.NNConfusionMatrix), 1+i+((len(self.NNConfusionMatrix))*iter))
