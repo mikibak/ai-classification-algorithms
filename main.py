@@ -74,6 +74,15 @@ def main():
     plt.legend(loc='best')
     plt.show()
 
+    plt.title("Train accuracy for SVM and NN")
+    plt.xlabel('Data size (number of opinions)')
+    plt.ylabel('Accuracy')
+    plt.subplots_adjust(bottom=0.25)
+    plt.plot(data_sizes, train_accuracy_svm, label="Train accuracy SVM")
+    plt.plot(data_sizes, train_accuracy_NN, label="Train accuracy NN")
+    plt.legend(loc='best')
+    plt.show()
+
     # Gini index - miara nieczystości, chcemy to minimalizować
     # My mamy Gini gain - chcemy to maksymalizować
     # w korzeniu największy Gini gain
