@@ -13,7 +13,7 @@ def main():
 
     confMatrix = ConfusionMatrix()
     np.random.seed(123)
-    data_sizes = [50, 100, 200, 500, 1000, 2000, 5000, 10000]
+    data_sizes = [50, 100, 200, 500, 1000]
     #data_sizes = [10000]
     train_accuracy_svm = []
     test_accuracy_svm = []
