@@ -10,7 +10,9 @@ class Svm:
         # Training a SVM classifier using SVC class
         self.svm.fit(X, y)
 
+    def getPredictions(self,X):
+        return self.svm.predict(X)
     def evaluate(self, X, y):
         y_pred = self.svm.predict(X)
-        print('Accuracy: %.3f' % accuracy_score(y, y_pred))
+        #print('Accuracy: %.3f' % accuracy_score(y, y_pred))
         return accuracy_score(y, y_pred)

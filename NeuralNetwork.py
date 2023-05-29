@@ -21,5 +21,14 @@ def NeuralNetwork(train_data,test_data):
                       loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                       metrics=['accuracy'])
     model.fit(X_train, y_train, epochs=10)
+    train_loss, train_acc = model.evaluate(X_train, y_train, verbose=2)
     test_loss, test_acc = model.evaluate(X_test, y_test, verbose=2)
-    print('\nTest accuracy:', test_acc)
+    #print('\nTest accuracy:', test_acc)
+    probability_model = tf.keras.Sequential([
+        model,
+        tf.keras.layers.Softmax()
+    ])
+    propability=probability_model(X_test).numpy()
+    return train_acc,test_acc , np.argmax(propability,axis=1)
+    #("var")
+
