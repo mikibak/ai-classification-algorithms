@@ -13,7 +13,7 @@ def main():
 
     confMatrix = ConfusionMatrix()
     np.random.seed(123)
-    data_sizes = [50, 100, 200,500,1000]
+    data_sizes = [50, 100, 200, 500, 1000, 2000, 5000, 10000]
     #data_sizes = [10000]
     train_accuracy_svm = []
     test_accuracy_svm = []
@@ -64,6 +64,16 @@ def main():
     plt.plot(data_sizes, test_accuracy_NN, label="Test accuracy")
     plt.legend(loc='best')
     plt.show()
+
+    plt.title("Test accuracy for SVM and NN")
+    plt.xlabel('Data size (number of opinions)')
+    plt.ylabel('Accuracy')
+    plt.subplots_adjust(bottom=0.25)
+    plt.plot(data_sizes, test_accuracy_svm, label="Test accuracy SVM")
+    plt.plot(data_sizes, test_accuracy_NN, label="Test accuracy NN")
+    plt.legend(loc='best')
+    plt.show()
+
     # Gini index - miara nieczystości, chcemy to minimalizować
     # My mamy Gini gain - chcemy to maksymalizować
     # w korzeniu największy Gini gain
@@ -72,6 +82,8 @@ def main():
     # rf.train(*train_data)
     # rf.evaluate(*train_data)
     # rf.evaluate(*test_data)
+    return
 
 if __name__=="__main__":
     main()
+    
