@@ -37,7 +37,6 @@ def preprocess(review_text):
     return document
 
 
-# TODO clean this up
 def preprocess_with_lexicon(review_text, positive_and_negative):
     # change sentence to lower case
     review_text = str(review_text).lower()
@@ -49,7 +48,6 @@ def preprocess_with_lexicon(review_text, positive_and_negative):
     words = [word for word in words if word in positive_and_negative["word1"].values]
 
     return words
-
 
 
 def count_pos_and_neg(review_text, positive_and_negative):

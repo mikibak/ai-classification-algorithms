@@ -46,8 +46,8 @@ def load_reviews(ammount):
     data = data.dropna().reset_index(drop=True) # very important, drops rows containing NULL
     data["verified"] = [1 if verified else 0 for verified in data["verified"]]
     data = data.drop("verified", axis=1)
-    data.loc[data['overall'] <= 3.0, 'overall'] = 0
-    data.loc[data['overall'] > 3.0, 'overall'] = 1
+    # data.loc[data['overall'] <= 3.0, 'overall'] = 0
+    # data.loc[data['overall'] > 3.0, 'overall'] = 1
     # data = data.sample(frac=1)
     # data = data.drop(data[data.overall == 3.0].index) this removed neutral opinions
     # data = data.reset_index()

@@ -13,8 +13,8 @@ def main():
 
     confMatrix = ConfusionMatrix()
     np.random.seed(123)
-    data_sizes = [50, 100, 200, 500, 1000, 2000, 5000]
-    #data_sizes = [10000]
+    data_sizes = [50, 100, 200, 500, 890]
+    # data_sizes = [50, 100, 200, 500]
     train_accuracy_svm = []
     test_accuracy_svm = []
     test_accuracy_NN = []
@@ -23,8 +23,8 @@ def main():
     time_NN = []
 
     for data_size in data_sizes:
-        # train_data, test_data = load_titanic()
-        train_data, test_data = load_reviews(data_size)
+        train_data, test_data = load_titanic()
+        # train_data, test_data = load_reviews(data_size)
         start = time.time()
         NN = NeuralNetwork.NeuraltNetwork()
         NN.train(train_data, test_data)
@@ -47,7 +47,7 @@ def main():
         train_accuracy_svm.append(SVM.evaluate(*train_data))
         test_accuracy_svm.append(SVM.evaluate(*test_data))
 
-    confMatrix.print()
+    # confMatrix.print()
     print("SVM")
     print(train_accuracy_svm)
     print(test_accuracy_svm)
@@ -55,7 +55,7 @@ def main():
     print(train_accuracy_NN)
     print(test_accuracy_NN)
 
-    plt.title("Train and test accuracy for SVM (binary)")
+    plt.title("Train and test accuracy for SVM (Titanic survivors)")
     plt.xlabel('Data size (number of opinions)')
     plt.ylabel('Accuracy')
     plt.subplots_adjust(bottom=0.25)
@@ -64,7 +64,7 @@ def main():
     plt.legend(loc='best')
     plt.show()
 
-    plt.title("Train and test accuracy for NN (binary)")
+    plt.title("Train and test accuracy for NN (Titanic survivors)")
     plt.xlabel('Data size (number of opinions)')
     plt.ylabel('Accuracy')
     plt.subplots_adjust(bottom=0.25)
@@ -73,7 +73,7 @@ def main():
     plt.legend(loc='best')
     plt.show()
 
-    plt.title("Test accuracy for SVM and NN (binary)")
+    plt.title("Test accuracy for SVM and NN (Titanic survivors)")
     plt.xlabel('Data size (number of opinions)')
     plt.ylabel('Accuracy')
     plt.subplots_adjust(bottom=0.25)
@@ -82,7 +82,7 @@ def main():
     plt.legend(loc='best')
     plt.show()
 
-    plt.title("Train accuracy for SVM and NN (binary)")
+    plt.title("Train accuracy for SVM and NN (Titanic survivors)")
     plt.xlabel('Data size (number of opinions)')
     plt.ylabel('Accuracy')
     plt.subplots_adjust(bottom=0.25)
@@ -91,7 +91,7 @@ def main():
     plt.legend(loc='best')
     plt.show()
 
-    plt.title("Time of execution for SVM and NN (binary)")
+    plt.title("Time of execution for SVM and NN (Titanic survivors)")
     plt.xlabel('Data size (number of opinions)')
     plt.ylabel('Time [s]')
     plt.subplots_adjust(bottom=0.25)
