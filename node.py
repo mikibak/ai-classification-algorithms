@@ -29,13 +29,13 @@ class Node:
             left_negative = 0
 
             for i in left_node:
-                if i == 1: #costam[i]:
+                if i == 1: 
                     left_positive += 1
                 else:
                     left_negative += 1
 
             for i in right_node:
-                if i == 1: #costam[i+idx+1]:
+                if i == 1:
                     right_positive += 1
                 else:
                     right_negative += 1
@@ -49,8 +49,6 @@ class Node:
             if gini_gain > best_gain:
                 best_gain = gini_gain
                 best_idx = idx
-
-
         return best_idx, best_gain
 
     def split_data(self, X, y, idx, val):
@@ -81,7 +79,6 @@ class Node:
             return None, None
 
         best_value = np.mean(X[best_split[1], best_split[0]])
-
         return best_split[0], best_value
 
     def predict(self, x):
